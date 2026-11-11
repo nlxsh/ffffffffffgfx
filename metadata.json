@@ -1,0 +1,6 @@
+{
+  "name": "Gen-Z Portal",
+  "description": "Student hub featuring free study tricks, notes, real-time Firebase global chat, and a competitive Study Playground with Top 10 leaderboard.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

@@ -1,0 +1,300 @@
+@import "tailwindcss";
+@custom-variant dark (&:where(.dark, .dark *));
+
+:root {
+  --bg: #121316;
+  --surface: #1E2024;
+  --surface-container: #1E2024;
+  --surface-hover: #26292E;
+  --text: #E3E4E8;
+  --text-secondary: color-mix(in srgb, #E3E4E8 55%, #121316);
+  --accent: #C5C9D3;
+  --accent-pressed: #A8ACB6;
+  --accent-dark: #121316;
+  
+  --glass-bg: hsl(0 0% 100% / 0.09);
+  --glass-border: rgba(255, 255, 255, 0.18);
+  --glass-highlight: rgba(255, 255, 255, 0.32);
+  --glass-shadow: 0 1.25rem 2.5rem rgba(0, 0, 0, 0.32), inset 0.0625rem 0.0625rem 0.0625rem rgba(255, 255, 255, 0.32), inset -0.0625rem -0.0625rem 0.0625rem rgba(255, 255, 255, 0.08);
+  
+  --inset-bg: rgba(0, 0, 0, 0.26);
+  --inset-shadow: inset 0 0.125rem 0.3125rem rgba(0, 0, 0, 0.48), inset 0 -0.0625rem 0.0625rem rgba(255, 255, 255, 0.09);
+  
+  --pill-indicator-bg: color-mix(in srgb, #C5C9D3 28%, transparent);
+  --pill-indicator-shadow: inset 0 0 0.625rem rgba(255, 255, 255, 0.30), 0 0.25rem 0.75rem rgba(0, 0, 0, 0.2);
+
+  --chat-me-bg: #C5C9D3;
+  --chat-me-text: #121316;
+  --chat-other-bg: rgba(255, 255, 255, 0.08);
+  --chat-other-text: #E3E4E8;
+  --chat-other-border: rgba(255, 255, 255, 0.12);
+  --chat-quote-me-bg: rgba(0, 0, 0, 0.15);
+  --chat-quote-me-border: #121316;
+  --chat-quote-me-text: #121316;
+  --chat-quote-other-bg: rgba(0, 0, 0, 0.25);
+  --chat-quote-other-border: #C5C9D3;
+  --chat-quote-other-text: #A8ACB6;
+  
+  --comment-card-bg: rgba(0, 0, 0, 0.30);
+  --comment-card-border: rgba(255, 255, 255, 0.06);
+  --reply-card-bg: rgba(0, 0, 0, 0.20);
+  --reply-card-border: rgba(255, 255, 255, 0.06);
+  
+  --font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji', sans-serif;
+  --move: 0rem;
+}
+
+:root[data-theme="light"], .light {
+  --bg: #F4F6F9;
+  --surface: #FFFFFF;
+  --surface-container: #FFFFFF;
+  --surface-hover: #ECEEF2;
+  --text: #18191D;
+  --text-secondary: #5F6470;
+  --accent: #1E2025;
+  --accent-pressed: #121316;
+  --accent-dark: #FFFFFF;
+  
+  --glass-bg: rgba(255, 255, 255, 0.85);
+  --glass-border: rgba(0, 0, 0, 0.08);
+  --glass-highlight: rgba(255, 255, 255, 0.95);
+  --glass-shadow: 0 0.75rem 2rem rgba(0, 0, 0, 0.05), inset 0.0625rem 0.0625rem 0.0625rem rgba(255, 255, 255, 0.95), inset -0.0625rem -0.0625rem 0.0625rem rgba(0, 0, 0, 0.03);
+  
+  --inset-bg: rgba(0, 0, 0, 0.04);
+  --inset-shadow: inset 0 0.125rem 0.25rem rgba(0, 0, 0, 0.06);
+  
+  --pill-indicator-bg: rgba(30, 32, 37, 0.12);
+  --pill-indicator-shadow: inset 0 0 0.5rem rgba(255, 255, 255, 0.8), 0 0.15rem 0.4rem rgba(0, 0, 0, 0.06);
+
+  --chat-me-bg: #1E2025;
+  --chat-me-text: #FFFFFF;
+  --chat-other-bg: #FFFFFF;
+  --chat-other-text: #18191D;
+  --chat-other-border: rgba(0, 0, 0, 0.08);
+  --chat-quote-me-bg: rgba(255, 255, 255, 0.18);
+  --chat-quote-me-border: #FFFFFF;
+  --chat-quote-me-text: #FFFFFF;
+  --chat-quote-other-bg: rgba(0, 0, 0, 0.04);
+  --chat-quote-other-border: #1E2025;
+  --chat-quote-other-text: #5F6470;
+
+  --comment-card-bg: rgba(0, 0, 0, 0.03);
+  --comment-card-border: rgba(0, 0, 0, 0.06);
+  --reply-card-bg: rgba(0, 0, 0, 0.02);
+  --reply-card-border: rgba(0, 0, 0, 0.04);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html, body {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  max-width: 100vw;
+  overflow-x: hidden;
+  background-color: var(--bg);
+  color: var(--text);
+  font-family: var(--font-family);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+img, video {
+  max-width: 100%;
+  height: auto;
+  display: block;
+}
+
+/* Glass Container Style */
+.glass-container {
+  background: var(--glass-bg);
+  backdrop-filter: blur(1rem) saturate(160%);
+  -webkit-backdrop-filter: blur(1rem) saturate(160%);
+  border: 0.0625rem solid var(--glass-border);
+  box-shadow: var(--glass-shadow);
+}
+
+.glass-card {
+  background: var(--glass-bg);
+  backdrop-filter: blur(1rem) saturate(160%);
+  -webkit-backdrop-filter: blur(1rem) saturate(160%);
+  border: 0.0625rem solid var(--glass-border);
+  border-radius: 1.75rem;
+  box-shadow: 0 0.75rem 2rem rgba(0, 0, 0, 0.25);
+  transition: transform 0.2s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.glass-card:hover {
+  transform: translateY(-0.1875rem);
+  box-shadow: 0 1rem 2.5rem rgba(0, 0, 0, 0.3);
+}
+
+/* Recessed Inset Controls */
+.inset-control {
+  background: var(--inset-bg);
+  box-shadow: var(--inset-shadow);
+  border: none;
+  border-radius: 9999rem;
+  color: var(--text);
+  transition: background 0.15s ease, transform 0.15s ease;
+}
+
+.inset-control:active {
+  transform: scale(0.96);
+}
+
+/* Primary Accent Button */
+.btn-primary {
+  background: var(--accent);
+  color: var(--accent-dark);
+  font-weight: 600;
+  border-radius: 9999rem;
+  border: none;
+  padding: 0.625rem 1.375rem;
+  box-shadow: inset 0.0625rem 0.0625rem 0.0625rem rgba(255, 255, 255, 0.45), 0 0.25rem 0.75rem rgba(0, 0, 0, 0.2);
+  transition: background 0.15s ease, transform 0.15s ease;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+}
+
+.btn-primary:active {
+  background: var(--accent-pressed);
+  transform: scale(0.95);
+}
+
+/* Prevent browser focus outlines from drawing rectangular boxes inside capsules */
+input, textarea {
+  outline: none !important;
+  box-shadow: none !important;
+}
+
+input:focus, textarea:focus,
+input:focus-visible, textarea:focus-visible {
+  outline: none !important;
+  box-shadow: none !important;
+}
+
+button:focus-visible {
+  outline: 0.125rem solid rgba(255, 255, 255, 0.4);
+  outline-offset: 0.125rem;
+}
+
+/* Navigation Switcher */
+.switcher {
+  padding: 0.5rem 0.75rem;
+  display: flex;
+  gap: 0.75rem;
+  position: relative;
+  z-index: 1;
+  isolation: isolate;
+  background: var(--glass-bg);
+  backdrop-filter: blur(1rem) saturate(160%);
+  -webkit-backdrop-filter: blur(1rem) saturate(160%);
+  border: 0.0625rem solid var(--glass-border);
+  border-radius: 9999rem;
+  box-shadow: var(--glass-shadow);
+}
+
+.switcher-btn {
+  width: 3.25rem;
+  height: 3.25rem;
+  padding: 0;
+  border-radius: 50%;
+  flex: none;
+  cursor: pointer;
+  opacity: 0.6;
+  transition: opacity 0.3s ease, transform 0.15s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: transparent;
+  border: none;
+  color: var(--text);
+}
+
+.switcher-btn:hover {
+  opacity: 0.88;
+}
+
+.switcher-btn:active {
+  transform: scale(0.94);
+}
+
+.switcher-btn.active {
+  opacity: 1;
+  color: var(--text);
+}
+
+.switcher::after {
+  content: "";
+  position: absolute;
+  left: 0.375rem;
+  top: 0.375rem;
+  width: 3.25rem;
+  height: 3.25rem;
+  border-radius: 50%;
+  background: var(--pill-indicator-bg);
+  box-shadow: var(--pill-indicator-shadow);
+  z-index: -1;
+  transform: translateX(var(--move, 0rem));
+  transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  pointer-events: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .switcher::after,
+  .glass-card,
+  .btn-primary,
+  .switcher-btn {
+    transition: none !important;
+    transform: none !important;
+  }
+}
+
+/* Pill Input */
+.pill-input {
+  width: 100%;
+  border-radius: 9999rem;
+  background: var(--inset-bg);
+  box-shadow: var(--inset-shadow);
+  border: 0.0625rem solid transparent;
+  color: var(--text);
+  padding: 0.625rem 1.125rem;
+  font-size: clamp(0.875rem, 0.85rem + 0.3vw, 1rem);
+  transition: border-color 0.2s ease, background 0.2s ease;
+}
+
+.pill-input:focus,
+.pill-input:focus-within {
+  border-color: var(--accent);
+  outline: none !important;
+  box-shadow: var(--inset-shadow);
+}
+
+.pill-input::placeholder {
+  color: var(--text-secondary);
+}
+
+/* Custom scrollbars */
+::-webkit-scrollbar {
+  width: 0.375rem;
+  height: 0.375rem;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.15);
+  border-radius: 9999rem;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(255, 255, 255, 0.25);
+}

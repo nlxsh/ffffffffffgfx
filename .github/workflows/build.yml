@@ -1,0 +1,61 @@
+name: Build Android APK
+on: [push]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    env:
+      FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Set up JDK 21
+        uses: actions/setup-java@v4
+        with:
+          java-version: '21'
+          distribution: 'temurin'
+
+      - name: Install Dependencies
+        run: npm install --force
+
+      - name: Build React App
+        run: |
+          node -e "let p=require('./package.json');p.homepage='.';require('fs').writeFileSync('package.json',JSON.stringify(p,null,2));" || true
+          npm run build
+          BUILD_DIR=""
+          if [ -d "build" ]; then BUILD_DIR="build"
+          elif [ -d "dist" ]; then BUILD_DIR="dist"
+          else echo "ERROR: No build output folder found" && exit 1
+          fi
+          echo "BUILD_DIR=$BUILD_DIR" >> $GITHUB_ENV
+
+      - name: Setup Capacitor
+        run: |
+          npm install @capacitor/core @capacitor/cli @capacitor/android
+          node -e "const fs=require('fs');const c={appId:'com.genz.app',appName:'Gen - Z',webDir:process.env.BUILD_DIR,server:{androidScheme:'https',hostname:'localhost',cleartext:true}};fs.writeFileSync('capacitor.config.json',JSON.stringify(c,null,2));"
+          npx cap add android || true
+          npx cap sync android
+
+      - name: Generate App Icon
+        run: |
+          npm install @capacitor/assets --save-dev
+          mkdir -p resources
+          if [ -f "resources/icon.png" ]; then
+            npx capacitor-assets generate --android --iconBackgroundColor "#FFFFFF" --iconBackgroundColorDark "#101014" --splashBackgroundColor "#FFFFFF" --splashBackgroundColorDark "#101014" || true
+          else
+            echo "No custom icon — using default."
+          fi
+
+      - name: Build Android APK
+        run: |
+          cd android
+          echo "configurations.all { resolutionStrategy.eachDependency { DependencyResolveDetails details -> if (details.requested.group == 'org.jetbrains.kotlin') { details.useVersion '1.8.22' } } }" >> app/build.gradle
+          chmod +x gradlew
+          ./gradlew assembleDebug
+
+      - name: Upload APK
+        uses: actions/upload-artifact@v4
+        with:
+          name: Mobile-App-APK
+          path: android/app/build/outputs/apk/debug/app-debug.apk

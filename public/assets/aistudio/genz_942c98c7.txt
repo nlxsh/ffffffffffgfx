@@ -1,0 +1,152 @@
+app name : Gen-Z
+
+
+আমাকে একটা ওয়েবএ্যাপ বানিয়ে দাও যেখানে স্টুডেন্টদের প্রয়োজনীয় সকল ইনফরমেশন থাকবে  |
+
+তথ্য : 
+- আমাদের ওয়েবএ্যাপ এ সকল কিছু ফ্রিতে পাওয়া যাবে লাইক নোট, স্ট্যাডিটি ট্রিকস, ইত্যাদি 
+- লাইভ চ্যাটিং থাকবে গ্লোবালি যা ফায়ারবেশ এর  মাধ্যমে হবে 
+- একটা স্টাডি প্লেগ্রাউন্ড থাকবে যেখানে একজন স্টুডেন্ট তার নোট শেয়ার করতে পারবে জার নোট যত বেশি লাইক পড়বে টার র‍্যাঙ্ক তত উপরে থাকবে টোটাল রাংক থাকবে ১০ এর মধ্যে | 
+- ছবি আপলোড করা যাবে এক্ষেত্রে ইমেজ কম্প্রেসার ইউজ করবা যেন ফায়ার বেশে ঝামেলা না হয় |
+
+- প্রথমে অ্যাপ এ প্রবেশ করার পূর্বে স্টুডেন্ট তার ইউজার নেম এন্ড পাসওয়ার্ড দিয়ে একাউন্ট করবে একজনের ইউজার নেম আরেকজনের সাথে মিলবে না 
+
+
+
+// firebase code 
+
+
+
+// Import the functions you need from the SDKs you need
+import { initializeApp } from "firebase/app";
+import { getAnalytics } from "firebase/analytics";
+// TODO: Add SDKs for Firebase products that you want to use
+// https://firebase.google.com/docs/web/setup#available-libraries
+
+// Your web app's Firebase configuration
+// For Firebase JS SDK v7.20.0 and later, measurementId is optional
+const firebaseConfig = {
+  apiKey: "AIzaSyD9wmRk7sLg315oq3ATvDjAvOFtowDVYyU",
+  authDomain: "gen-z-d600b.firebaseapp.com",
+  projectId: "gen-z-d600b",
+  storageBucket: "gen-z-d600b.firebasestorage.app",
+  messagingSenderId: "540352979305",
+  appId: "1:540352979305:web:c0f98629a8a980cf725df8",
+  measurementId: "G-PMXZ6E1EE7"
+};
+
+// Initialize Firebase
+const app = initializeApp(firebaseConfig);
+const analytics = getAnalytics(app);
+
+
+
+
+
+
+
+
+
+Apply this design system to the app above. The features come only from the description; this section controls how the app looks, feels and moves. Put every design decision in CSS custom properties so the theme can be changed in one place.
+
+
+
+1. COLOR SYSTEM (dark theme)
+
+- Background: #121316
+
+- Surface (cards, inputs, nav): #1E2024
+
+- Text: #E3E4E8; secondary text is a 55% blend of text and background
+
+- Accent: #C5C9D3; for pressed states use a slightly darker shade of it
+
+- Use the accent only for primary actions, active states and toggles. Never add other hues.
+- Solid colors only: no gradients anywhere, no glow or neon effects, no decorative blobs. Keep the interface clean, calm and hand-crafted.
+
+- Body text must keep at least 4.5:1 contrast. Provide a matching light theme through CSS variables.
+
+
+
+2. VISUAL STYLE
+
+Frosted liquid glass UI on a flat graphite surface (#121316). Glass container (cards, inputs and navigation): background:hsl(0 0% 100% / 0.1); backdrop-filter:blur(1rem) saturate(160%) with the -webkit- prefix too; border:0.0625rem solid rgba(255,255,255,0.2); border-radius:1em for cards and 99em for pills; box-shadow:0 1.25rem 2.5rem rgba(0,0,0,0.28), inset 0.0625rem 0.0625rem 0.0625rem rgba(255,255,255,0.35), inset -0.0625rem -0.0625rem 0.0625rem rgba(255,255,255,0.08). Navigation switcher: a glass pill (padding:0.5rem 0.75rem; display:flex; gap:0.75rem; position:relative; z-index:1) holding circular icon-only buttons with no label (width:3.25rem; height:3.25rem; padding:0; border-radius:50%; flex:none; cursor:pointer; opacity:.6; transition:opacity .3s ease; the active button has opacity:1). The active state is a liquid sliding pill drawn by .switcher::after: position:absolute; left:0.375rem; top:0.375rem; width:3.25rem; height:3.25rem; border-radius:50%; background:color-mix(in srgb, #C5C9D3 28%, transparent); box-shadow:inset 0 0 0.625rem rgba(255,255,255,0.30), 0 0.25rem 0.75rem rgba(0,0,0,.2); z-index:-1; transform:translateX(var(--move,0rem)); transition:transform .4s cubic-bezier(.4,0,.2,1). In JS, on click toggle the active class and set --move on the root to the active button offsetLeft minus 0.375rem (measure it with offsetLeft, never hardcode a pixel step per index) and recompute on resize. Buttons that sit on cards are recessed (inset) controls with no border: background rgba(0,0,0,0.22); box-shadow:inset 0 0.125rem 0.3125rem rgba(0,0,0,.45), inset 0 -0.0625rem 0.0625rem rgba(255,255,255,0.1). The primary button is a solid accent #C5C9D3 with inset 0.0625rem 0.0625rem 0.0625rem rgba(255,255,255,.45). The page background is one flat solid color: no gradients, no blobs, no images. Mood: serene and calm, soft natural lighting, a glossy rim light on the glass edges, circular and rounded shapes, layered depth, a premium muted color palette with the accent #C5C9D3. Avoid low contrast, harsh shadows, clutter, neon colors, sharp edges and excessive text. Follow Material 3: color roles surface #121316, surface-container #1E2024, on-surface #E3E4E8, primary #C5C9D3 (use a dark on-primary text on it); tonal elevation instead of strong shadows; shape scale: full (50%) for icon buttons, 99em for pills and 1.75rem for cards; state layers of on-surface at 8% on hover and 12% on press. All icon buttons are circles showing only an icon (1.125rem, stroke 2) and no text label. Accessibility and robustness: the glass pill has isolation:isolate; the switcher uses role="tablist" with role="tab" buttons and ArrowLeft/ArrowRight to move selection; hover opacity .85; a visible :focus-visible ring (0.125rem solid rgba(255,255,255,.6), offset 0.125rem); @media (prefers-reduced-motion: reduce) removes the pill transition; @supports not (backdrop-filter: blur(0.0625rem)) raises the fill alpha to .14. Icons are 1.125rem, stroke-width 2, round caps, currentColor. Use at most 1-2 backdrop-filter layers per screen and never nest them. Cards use border-radius:1.5rem and box-shadow:0 0.75rem 2rem rgba(0,0,0,0.25). Text color #E3E4E8. No neon, no heavy glow, no gradients.
+
+
+
+3. SHAPE AND DEPTH
+
+- Cards: 2rem corner radius. Buttons and inputs: fully pill-shaped (border-radius: 9999rem). Icon buttons: circular.
+
+- Shadow depth: medium.
+
+- Spacing on a 0.5rem grid, 1.25rem page padding, generous whitespace, clear hierarchy, at most 2 columns. Use rem units for all sizes.
+
+
+
+4. TYPOGRAPHY
+
+- Use Inter (with a system sans-serif fallback). Bold headings, regular body, small muted captions, sentence case. One family only.
+
+
+
+5. COMPONENTS
+
+- Primary button: solid accent fill, readable text. No gradient, no glow.
+
+- Secondary actions and cards: surface color, same radius, accent-colored icon.
+
+- Inputs: fully pill-shaped (border-radius: 9999rem), placeholder in secondary text, visible focus ring in the accent.
+
+- Toggle switches: solid accent when on, white knob.
+
+- Floating navigation bar inset from the screen edges with large rounded corners; the active tab gets a light accent-tinted pill.
+
+
+
+6. HERO ELEMENT
+
+No hero graphic. Let typography and spacing carry the page. Do not add orbs, glowing circles or decorative blobs anywhere.
+
+
+
+7. MOTION (base duration 200ms)
+
+- Press feedback: scale to 0.94 on press with a quick ease (150ms).
+- Hover lift: cards and buttons rise 0.1875rem with a deeper shadow on hover.
+
+- Animate only on user action or on the single hero element. Respect prefers-reduced-motion.
+
+
+
+8. QUALITY BAR
+
+Fully fluid and responsive from small phones to wide desktops, keyboard focus states, ARIA roles on switches and tabs, safe-area insets on phones. Avoid generic template looks: no default Bootstrap cards, no gradients, no glow effects, no emoji icons.
+
+
+
+9. REFERENCE SCREEN LAYOUT
+
+Ask-AI composer: a wide glass capsule with plus, placeholder, mic and waveform icons plus a separate round close button, suggestion chips and navigation. Use it as the model for composition and component styling; adapt the content to the app described above.
+
+
+
+# ----------------------------------#
+
+
+
+# Critical: follow these CSS rules (dynamic dimensions and fluid sizing)
+
+1. FLUID SIZING: No fixed px widths or heights. Use %, rem, max-width and clamp().
+
+2. MODERN LAYOUT: No floats or absolute positioning for structure. Use CSS Grid (2D) and Flexbox (1D).
+
+3. MEDIA AND OVERFLOW: img, video { max-width: 100%; height: auto; } and html, body { max-width: 100vw; overflow-x: hidden; }
+
+4. FLUID TYPOGRAPHY: Spacing in rem. Always combine rem + vw inside clamp() for font-size, for example clamp(1rem, calc(1rem + 2vw), 2.5rem).
+
+
+
+
+
+# ----------------------------------#
